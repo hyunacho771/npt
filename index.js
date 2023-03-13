@@ -19,55 +19,50 @@ app.get('/login', function(request, response) {
 	response.sendFile(path.join(__dirname + '/login.html'));
 });
 
+app.get('/home', function(request, response) {
+	// If the user is loggedin
+	if (request.session.loggedin) {
+		// Output username
+		response.send(__dirname+'main.html');
+	} else {
+		// Not logged in
+		response.send('Please login to view this page!');
+	}
+	response.end();
+});
+
 
 var router = express.Router();
 
-var database = require('../database');
+var database = require('C:/Users/minjo/OneDrive/문서/GitHub/npt/database.js');
 
-router.post('/login', function(request, response, next){
-
-    var user_email_address = request.body.user_email_address;
-
-    var user_password = request.body.user_password;
-
-    if(user_email_address && user_password)
-    {
-        query = `
-        SELECT * FROM user_login 
-        WHERE user_email = "${user_email_address}"
-        `;
-
-        database.query(query, function(error, data){
-
-            if(data.length > 0)
-            {
-                for(var count = 0; count < data.length; count++)
-                {
-                    if(data[count].user_password == user_password)
-                    {
-                        request.session.user_id = data[count].user_id;
-
-                        response.redirect("/");
-                    }
-                    else
-                    {
-                        response.send('Incorrect Password');
-                    }
-                }
-            }
-            else
-            {
-                response.send('Incorrect Email Address');
-            }
-            response.end();
-        });
-    }
-    else
-    {
-        response.send('Please Enter Email Address and Password Details');
-        response.end();
-    }
-
+app.post('/login', function(request, response) {
+	// Capture the input fields
+	let email = request.body.email;
+	let password = request.body.password;
+	// Ensure the input fields exists and are not empty
+	if (email && password) {
+		// Execute SQL query that'll select the account from the database based on the specified username and password
+		database.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [email, password], function(error, results, fields) {
+			// If there is an issue with the query, output the error
+			if (error) throw error;
+			// If the account exists
+            console.log(results.length);
+			if (results.length >= 0) {
+				// Authenticate the user
+				request.session.loggedin = true;
+				request.session.username = email;
+				// Redirect to home page
+				response.redirect('/home');
+			} else {
+				response.send('Incorrect Username and/or Password!');
+			}			
+			response.end();
+		});
+	} else {
+		response.send('Please enter Username and Password!');
+		response.end();
+	}
 });
 
 router.get('/logout', function(request, response, next){

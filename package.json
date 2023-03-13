@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "app": "^0.1.0"
+    "app": "^0.1.0",
+    "database": "^0.0.2",
+    "express-session": "^1.17.3",
+    "mysql": "^2.18.1"
   }
 }
