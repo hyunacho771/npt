@@ -19,17 +19,21 @@ app.get('/login', function(request, response) {
 	response.sendFile(path.join(__dirname + '/login.html'));
 });
 
-app.get('/home', function(request, response) {
+app.get('/main', function(req, res) {
 	// If the user is loggedin
-	if (request.session.loggedin) {
+	if (req.session.loggedin) {
 		// Output username
-		response.send(__dirname+'main.html');
+		res.sendFile(__dirname + '/main.html');
 	} else {
 		// Not logged in
-		response.send('Please login to view this page!');
+		res.send('Please login to view this page!');
 	}
-	response.end();
+	//response.end();
 });
+
+app.get('/', function(req, res){
+    res.sendFile( __dirname + '/main.html')
+})
 
 
 var router = express.Router();
@@ -47,13 +51,12 @@ app.post('/login', function(request, response) {
 			// If there is an issue with the query, output the error
 			if (error) throw error;
 			// If the account exists
-            console.log(results.length);
 			if (results.length >= 0) {
 				// Authenticate the user
 				request.session.loggedin = true;
 				request.session.username = email;
 				// Redirect to home page
-				response.redirect('/home');
+				response.redirect('/main');
 			} else {
 				response.send('Incorrect Username and/or Password!');
 			}			
