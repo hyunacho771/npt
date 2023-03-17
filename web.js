@@ -4,6 +4,7 @@ const session = require('express-session');
 const path = require('path');
 const app = express();
 
+
 app.use(session({
 	secret: 'secret',
 	resave: true,
@@ -12,6 +13,7 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.set('views', __dirname + '/views');
 
 // http://localhost:3000/
 app.get('/login', function(request, response) {
