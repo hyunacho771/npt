@@ -3,7 +3,14 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const app = express();
+app.use('/dist', express.static( __dirname + '/dist'));
+// 8000번 포트로 지정
+const port = 8001;
 
+// 화면 엔진은 ejs로 설정한다.
+app.set("view engine", "ejs");
+app.set('views', __dirname + '/views');
+app.engine('ejs', require('ejs').__express);
 
 app.use(session({
 	secret: 'secret',
