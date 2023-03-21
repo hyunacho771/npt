@@ -2,10 +2,11 @@
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
-	host : 'localhost',
-	database : 'nodelogin',
-	user : 'root',
-	password : 'finestra771'
+	host: 'nptkmla.cafe24app.com/',
+  user: 'minjokwindows',
+  password: 'finestra771',
+  database: 'test',
+  port: '3306',
 });
 
 connection.connect(function(error){
