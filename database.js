@@ -2,7 +2,7 @@
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
-	host: 'nptkmla.cafe24app.com/',
+	host: '10.0.0.1',
   user: 'minjokwindows',
   password: 'finestra771',
   database: 'test',
