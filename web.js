@@ -77,6 +77,14 @@ app.post('/login', function(request, response) {
 	}
 });
 
+app.get('/image_3', (req, res) => {
+	readFile('public/image/image_3.png', (err, data) => {
+	  if(err) { res.send() }
+	  res.send(data)
+	})
+})
+
+
 router.get('/logout', function(request, response, next){
 
     request.session.destroy();
@@ -84,6 +92,7 @@ router.get('/logout', function(request, response, next){
     response.redirect("/");
 
 });
+
 
 module.exports = router;
 
