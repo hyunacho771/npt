@@ -4,6 +4,7 @@ const session = require('express-session');
 const path = require('path');
 const app = express();
 app.use('/dist', express.static( __dirname + '/dist'));
+import { readFile } from 'fs';
 // 8000번 포트로 지정
 const port = 8001;
 
