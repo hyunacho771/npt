@@ -3,15 +3,16 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const app = express();
+var fs=require('fs')
+
 app.use('/dist', express.static( __dirname + '/dist'));
-import { readFile } from 'fs';
 // 8000번 포트로 지정
 const port = 8001;
 
 // 화면 엔진은 ejs로 설정한다.
 app.set("view engine", "ejs");
-app.set('views', __dirname + '/views');
-app.engine('ejs', require('ejs').__express);
+app.set('views', './views');
+//app.engine('ejs', require('ejs').__express);
 
 app.use(session({
 	secret: 'secret',
@@ -21,19 +22,18 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
-app.set('views', __dirname + '/views');
 
 // http://localhost:3000/
 app.get('/login', function(request, response) {
 	// Render login template
-	response.sendFile(path.join(__dirname + '/login.html'));
+	response.render(path.join('login'));
 });
 
 app.get('/main', function(req, res) {
 	// If the user is loggedin
 	if (req.session.loggedin) {
 		// Output username
-		res.sendFile(__dirname + '/main.html');
+		res.render('main');
 	} else {
 		// Not logged in
 		res.send('Please login to view this page!');
@@ -42,7 +42,7 @@ app.get('/main', function(req, res) {
 });
 
 app.get('/', function(req, res){
-    res.sendFile( __dirname + '/main.html')
+    res.render('main')
 })
 
 
@@ -78,13 +78,33 @@ app.post('/login', function(request, response) {
 	}
 });
 
-app.get('/image_3', (req, res) => {
-	readFile('image_3.png', (err, data) => {
+app.get('/image_3', function(req, res){
+	fs.readFile('public/image/image_3.png', function(err, data) {
+	  if(err) { res.send() }
+	  res.send(data)
+	})
+})
+app.get('/image_4', function(req, res){
+	fs.readFile('public/image/image_4.png', function(err, data) {
 	  if(err) { res.send() }
 	  res.send(data)
 	})
 })
 
+app.get('/image_5', function(req, res){
+	fs.readFile('public/image/image_5.png', function(err, data) {
+	  if(err) { res.send() }
+	  res.send(data)
+	})
+})
+
+
+app.get('/received_5465444626842627_1', function(req, res){
+	fs.readFile('public/image/received_5465444626842627_1.png', function(err, data) {
+	  if(err) { res.send() }
+	  res.send(data)
+	})
+})
 
 router.get('/logout', function(request, response, next){
 
