@@ -78,7 +78,7 @@ app.post('/login', function(request, response) {
 });
 
 app.get('/image_3', (req, res) => {
-	readFile('public/image/image_3.png', (err, data) => {
+	readFile('image_3.png', (err, data) => {
 	  if(err) { res.send() }
 	  res.send(data)
 	})
