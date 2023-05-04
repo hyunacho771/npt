@@ -16,5 +16,6 @@
     "backend": "nodemon npt/web.js",
     "frontend": "npm run start --prefix client",
     "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
+    "heroku-postbuild": "npm run build"
  }
 }
