@@ -3,7 +3,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "http://localhost:3000/",
   headers: {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
@@ -13,7 +13,8 @@ const api = axios.create({
 
 export const insertVideo = (payload) => api.post(`/videos`, payload);
 export const getAllVideos = () => api.get(`/videos`);
-export const getVideos = () => api.get(`/videos`);
+export const getVideo = (payload) => api.get(`/videos`, payload);
+export const getVideos = (payload) => api.get(`/videos`, payload);
 export const updateVideoById = (id, payload) =>
   api.put(`/videos/${id}`, payload);
 export const deleteVideoById = (id) => api.delete(`/videos/${id}`);
@@ -26,6 +27,7 @@ export const logout = () => api.post(`/logout`);
 const apis = {
   insertVideo,
   getAllVideos,
+  getVideos,
   updateVideoById,
   deleteVideoById,
   getVideoById,

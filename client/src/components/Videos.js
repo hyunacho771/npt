@@ -1,32 +1,47 @@
-//components/videos.js
+//loading the videos from the database: Videos.js
 
 import React, { Component } from "react";
-import axios from "axios";
-import VideoPlayer from "./VideoPlayer";
+import { getVideos } from "../utils/api";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-class Videos extends Component {
-  state = {
-    videos: [],
-    selectedVideo: null,
-  };
+const Videos = () => {
+  const [videos, setVideos] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  componentDidMount() {
-    axios.get("/api/videos").then((response) => {
-      this.setState({
-        videos: response.data,
-        selectedVideo: response.data[0],
+  useEffect(() => {
+    getVideos()
+      .then((response) => {
+        setVideos(response.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
       });
-    });
-  }
+  }, []);
 
-  render() {
-    const { selectedVideo } = this.state;
-    return (
-      <div>
-        <VideoPlayer video={selectedVideo} />
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-md-6 offset-md-3 mt-5">
+          <h1 className="text-center">Videos</h1>
+          {isLoading ? (
+            <h3 className="text-center">Loading...</h3>
+          ) : (
+            <ul>
+              {videos.map((video) => {
+                return (
+                  <li key={video._id}>
+                    <Link to={`/videos/${video._id}`}>{video.title}</Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Videos;

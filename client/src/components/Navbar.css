@@ -1,32 +1,37 @@
-ul {  
-  list-style-type: none;  
-  position: fixed;  
-  width:100%;  
-  top:0;  
-  margin: 0;  
-  padding: 0px;  
-  overflow: hidden;  
-  background-color: lightgray;  
-}  
-  
-li {  
-  float: left;  
-    border-right: 1px solid blue;  
-}  
-  
-li a {  
-  display: block;  
-  color: blue;  
- font-size:20px;  
-  text-align: center;  
-  padding: 10px 20px;  
-  text-decoration: none;  
-}  
-.active{  
-background-color: gray;  
-color: white;  
-}  
-li a:hover {  
-  background-color: orange;  
-  color: white;  
-}  
+/* Navbar.css */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+nav {
+  background-color: #fff;
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+ .nav__left > h2 {
+  margin: 0;
+  padding: 0;
+  color: #b52bff;
+}
+
+.nav__right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__right > p {
+  margin: 0;
+  padding: 0 10px;
+}
+

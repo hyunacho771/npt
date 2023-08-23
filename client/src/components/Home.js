@@ -1,17 +1,14 @@
-//Home.js
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getVideos } from "../utils/api";
-import "./Home.css";
+import axios from "axios";
 
-const Home = () => {
+function Home() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    getVideos()
+    axios
+      .get("/videos")
       .then((response) => {
-        console.log(response);
         setVideos(response.data);
       })
       .catch((error) => {
@@ -21,19 +18,26 @@ const Home = () => {
 
   return (
     <div className="home">
-      <h1>Home</h1>
-      <div className="videos">
-        {videos.map((video) => (
-          <div className="video" key={video._id}>
-            <Link to={`/videos/${video._id}`}>
-              <img src={video.thumbnail} alt={video.title} />
-              <h3>{video.title}</h3>
-            </Link>
-          </div>
-        ))}
+      <div>
+        <h1>Home</h1>
+        <p>
+          <Link to="/login">Login</Link> or <Link to="/signup">Register</Link>{" "}
+          to view protected videos
+        </p>
+        <div className="videos">
+          {videos &&
+            videos.map((video) => (
+              <div key={video._id} className="video">
+                <video width="320" height="240" controls>
+                  <source src={video.url} type="video/mp4" />
+                </video>
+                <p>{video.title}</p>
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default Home;

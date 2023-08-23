@@ -8,20 +8,27 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Videos from "./components/Videos";
 import Home from "./components/Home";
+import InsertVideo from "./components/InsertVideo";
+import VideoDetail from "./components/VideoDetail";
+import "./App.css";
 
 const history = createBrowserHistory();
 
 function App() {
   return (
-    <Router history={history}>
-      <Navbar />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/videos" exact component={Videos} />
-        <Route path="/login" exact component={Login} />
-        <Route path="/signup" exact component={Signup} />
-      </Switch>
-    </Router>
+    <div className="App">
+      <Router history={history}>
+        <Navbar />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/videos" exact component={Videos} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={Signup} />
+          <Route path="/videos/insert" exact component={InsertVideo} />
+          <Route path="/videos/:id" exact component={VideoDetail} />
+        </Switch>
+      </Router>
+    </div>
   );
 }
 
